@@ -7,3 +7,9 @@ CREATE TABLE IF NOT EXISTS user_t (
     surname VARCHAR(255) NOT NULL,
     active BOOLEAN NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS user_role_t (
+    user_id INT NOT NULL,
+    roles VARCHAR(20) NOT NULL,
+    PRIMARY KEY (user_id)
+);
