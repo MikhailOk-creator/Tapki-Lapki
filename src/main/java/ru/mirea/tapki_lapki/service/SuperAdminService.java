@@ -33,9 +33,7 @@ public class SuperAdminService {
 
             log.info("Data in .env: " + "\n" +
                     "Username: " + username + '\n' +
-                    "Email: " + email + '\n' +
-                    "Real Name: " + real_name  + '\n' +
-                    "Second Name: " + second_name);
+                    "Email: " + email + '\n');
 
             if ((username != null && !username.equals(""))  &&
                     (password != null && !password.equals("")) &&
@@ -43,13 +41,6 @@ public class SuperAdminService {
                 user.setUsername(username);
                 user.setPassword(password);
                 user.setEmail(email);
-
-                if (real_name != null && !real_name.equals("")) {
-                    user.setRealName(real_name);
-                }
-                if (second_name != null && !second_name.equals("")) {
-                    user.setSurname(second_name);
-                }
 
                 user.setActive(true);
                 user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
