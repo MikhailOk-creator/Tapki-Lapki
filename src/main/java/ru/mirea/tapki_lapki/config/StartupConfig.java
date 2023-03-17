@@ -13,6 +13,8 @@ import ru.mirea.tapki_lapki.service.SuperAdminService;
 import java.util.List;
 import java.util.Set;
 
+import static ru.mirea.tapki_lapki.entity.Role.SUPER_ADMIN;
+
 @Component
 @Slf4j
 @RequiredArgsConstructor
@@ -23,12 +25,15 @@ public class StartupConfig implements ApplicationRunner {
     public void run(ApplicationArguments args) throws Exception {
         List<User> usersInDB = userRepo.findAll();
         User user = null;
-        for (User u : usersInDB) {
-            Set<Role> roles = u.getRoles();
-            for (Role r : roles) {
-                if (r.getAuthority().equals("SUPER_ADMIN")) {
-                    user = u;
-                    break;
+        if (usersInDB.size() >= 0) {
+            log.info("Founded users in Database");
+            for (User u : usersInDB) {
+                Set<Role> roles = u.getRoles();
+                for (Role role : roles) {
+                    if(role.equals(SUPER_ADMIN)) {
+                        user = u;
+                        break;
+                    }
                 }
             }
         }
