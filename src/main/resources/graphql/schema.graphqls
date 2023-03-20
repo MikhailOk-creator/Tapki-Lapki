@@ -1,0 +1,15 @@
+type Query {
+    users: [User]
+}
+
+type User {
+    id: ID!
+    username: String!
+    email: String!
+    active: Boolean!
+    roles: [Role]
+}
+
+type Role {
+    role_name: String
+}
