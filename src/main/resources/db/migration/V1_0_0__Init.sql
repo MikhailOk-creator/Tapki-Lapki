@@ -57,7 +57,8 @@ CREATE TABLE IF NOT EXISTS product
 (
     id INT NOT NULL GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     name_p VARCHAR(255),
-    description VARCHAR(255)
+    description VARCHAR(255),
+    image_url VARCHAR(255)
 );
 
 CREATE TABLE IF NOT EXISTS price
