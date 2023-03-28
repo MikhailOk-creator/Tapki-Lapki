@@ -6,4 +6,5 @@ import ru.mirea.tapki_lapki.entity.Product;
 
 @Repository
 public interface ProductRepo extends JpaRepository<Product, Long> {
+    Product findByName_p(String name_p);
 }
