@@ -2,14 +2,22 @@ package ru.mirea.tapki_lapki.business_object.manager;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import ru.mirea.tapki_lapki.business_object.product.Product;
 import ru.mirea.tapki_lapki.business_object.product.ProductRepo;
+
+import java.io.File;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class ManagerService {
+    @Value("${upload.path}")
+    private String uploadPath;
+
     private final ProductRepo productRepo;
 
     public void addProduct (Product product) {
@@ -53,6 +61,32 @@ public class ManagerService {
             }
         } catch (Exception e) {
             log.error("The product could not be removed");
+        }
+    }
+
+    public void uploadImage (Long product_id, MultipartFile image_file) {
+        if (productRepo.findById(product_id) != null && image_file != null && !image_file.getOriginalFilename().isEmpty()) {
+            Product edit_product = productRepo.findByName_p(productRepo.findById(product_id).get().getName_p());
+
+            File uploadDir = new File(uploadPath);
+            if(!uploadDir.exists()) {
+                uploadDir.mkdir();
+            }
+
+            String uuidFile = UUID.randomUUID().toString();
+            String resultFileName = uuidFile + "." + image_file.getOriginalFilename();
+
+            edit_product.setImage_url(resultFileName);
+
+            try {
+                image_file.transferTo(new File(uploadPath + "/" + resultFileName));
+                log.info("File {} uploaded", resultFileName);
+                productRepo.save(edit_product);
+                log.info("Product with id {} updated");
+            } catch (Exception e) {
+                log.error("File {} not uploaded", resultFileName);
+                e.printStackTrace();
+            }
         }
     }
 }
