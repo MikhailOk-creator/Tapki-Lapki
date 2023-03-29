@@ -1,13 +1,10 @@
-package ru.mirea.tapki_lapki.service;
+package ru.mirea.tapki_lapki.business_object.user;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import ru.mirea.tapki_lapki.entity.CustomUserDetails;
-import ru.mirea.tapki_lapki.entity.User;
-import ru.mirea.tapki_lapki.repo.UserRepo;
 
 @Service
 @RequiredArgsConstructor

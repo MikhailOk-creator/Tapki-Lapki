@@ -1,8 +1,7 @@
-package ru.mirea.tapki_lapki.repo;
+package ru.mirea.tapki_lapki.business_object.product;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import ru.mirea.tapki_lapki.entity.Product;
 
 @Repository
 public interface ProductRepo extends JpaRepository<Product, Long> {

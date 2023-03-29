@@ -1,6 +1,5 @@
-package ru.mirea.tapki_lapki.entity;
+package ru.mirea.tapki_lapki.business_object.user;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

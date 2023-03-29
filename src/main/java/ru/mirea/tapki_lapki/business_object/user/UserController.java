@@ -1,12 +1,9 @@
-package ru.mirea.tapki_lapki.controller;
+package ru.mirea.tapki_lapki.business_object.user;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
-import ru.mirea.tapki_lapki.entity.User;
-import ru.mirea.tapki_lapki.service.AdminService;
-
-import java.util.List;
+import ru.mirea.tapki_lapki.business_object.admin.AdminService;
 
 @Controller
 @RequiredArgsConstructor

@@ -1,4 +1,4 @@
-package ru.mirea.tapki_lapki.entity;
+package ru.mirea.tapki_lapki.business_object.user;
 
 import org.springframework.security.core.GrantedAuthority;
 

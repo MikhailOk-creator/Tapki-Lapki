@@ -1,10 +1,10 @@
-package ru.mirea.tapki_lapki.service;
+package ru.mirea.tapki_lapki.business_object.manager;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.mirea.tapki_lapki.entity.Product;
-import ru.mirea.tapki_lapki.repo.ProductRepo;
+import ru.mirea.tapki_lapki.business_object.product.Product;
+import ru.mirea.tapki_lapki.business_object.product.ProductRepo;
 
 @Service
 @RequiredArgsConstructor

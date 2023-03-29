@@ -1,13 +1,13 @@
-package ru.mirea.tapki_lapki.service;
+package ru.mirea.tapki_lapki.business_object.admin;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import ru.mirea.tapki_lapki.entity.Role;
-import ru.mirea.tapki_lapki.entity.User;
-import ru.mirea.tapki_lapki.repo.UserRepo;
+import ru.mirea.tapki_lapki.business_object.user.Role;
+import ru.mirea.tapki_lapki.business_object.user.User;
+import ru.mirea.tapki_lapki.business_object.user.UserRepo;
 
 import java.util.Set;
 
