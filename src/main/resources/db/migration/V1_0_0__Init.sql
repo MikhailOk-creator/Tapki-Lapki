@@ -79,6 +79,7 @@ CREATE TABLE IF NOT EXISTS sales_order
     customer_id INT NOT NULL,
     ship_date DATE,
     total DECIMAL(10,2) NOT NULL,
+    status VARCHAR(125) NOT NULL,
     foreign key (customer_id) references customer(id)
 );
 
