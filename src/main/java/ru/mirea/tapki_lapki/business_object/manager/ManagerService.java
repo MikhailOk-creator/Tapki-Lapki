@@ -31,16 +31,16 @@ public class ManagerService {
 
     public void editProduct (Long id, String name_p, String description, String image_url) {
         try {
-            Product edit_product = productRepo.findByName_p(productRepo.findById(id).get().getName_p());
+            Product edit_product = productRepo.findByNameOfProduct(productRepo.findById(id).get().getNameOfProduct());
 
             if (name_p != null && name_p != "") {
-                edit_product.setName_p(name_p);
+                edit_product.setNameOfProduct(name_p);
             }
             if (description != null && description != "") {
                 edit_product.setDescription(description);
             }
             if (image_url != null && image_url != "") {
-                edit_product.setImage_url(image_url);
+                edit_product.setImageURL(image_url);
             }
 
             productRepo.save(edit_product);
@@ -53,7 +53,7 @@ public class ManagerService {
     public void deletedProduct (Long id) {
         try {
             if (productRepo.findById(id).isPresent()) {
-                String del_product_name = productRepo.findById(id).get().getName_p();
+                String del_product_name = productRepo.findById(id).get().getNameOfProduct();
                 productRepo.deleteById(id);
                 log.info("Product {} deleted", del_product_name);
             } else {
@@ -66,7 +66,7 @@ public class ManagerService {
 
     public void uploadImage (Long product_id, MultipartFile image_file) {
         if (productRepo.findById(product_id) != null && image_file != null && !image_file.getOriginalFilename().isEmpty()) {
-            Product edit_product = productRepo.findByName_p(productRepo.findById(product_id).get().getName_p());
+            Product edit_product = productRepo.findByNameOfProduct(productRepo.findById(product_id).get().getNameOfProduct());
 
             File uploadDir = new File(uploadPath);
             if(!uploadDir.exists()) {
@@ -76,7 +76,7 @@ public class ManagerService {
             String uuidFile = UUID.randomUUID().toString();
             String resultFileName = uuidFile + "." + image_file.getOriginalFilename();
 
-            edit_product.setImage_url(resultFileName);
+            edit_product.setImageURL(resultFileName);
 
             try {
                 image_file.transferTo(new File(uploadPath + "/" + resultFileName));

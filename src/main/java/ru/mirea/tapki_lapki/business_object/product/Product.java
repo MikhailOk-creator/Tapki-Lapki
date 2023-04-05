@@ -15,11 +15,11 @@ public class Product {
     private Long id;
 
     @Column(name = "name_p", nullable = false)
-    private String name_p;
+    private String nameOfProduct;
 
     @Column(name = "description", nullable = false)
     private String description;
 
     @Column(name = "image_url")
-    private String image_url;
+    private String imageURL;
 }
