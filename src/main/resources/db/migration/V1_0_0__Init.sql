@@ -58,18 +58,8 @@ CREATE TABLE IF NOT EXISTS product
     id INT NOT NULL GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     name_p VARCHAR(255),
     description VARCHAR(255),
-    image_url VARCHAR(255)
-);
-
-CREATE TABLE IF NOT EXISTS price
-(
-    product_id INT NOT NULL,
-    start_date DATE NOT NULL,
-    end_date DATE,
-    list_price DECIMAL(10,2) NOT NULL,
-    min_price DECIMAL(10,2) NOT NULL,
-    foreign key (product_id) references product(id),
-    primary key (product_id, start_date)
+    image_url VARCHAR(255),
+    price DECIMAL(10,2) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS sales_order

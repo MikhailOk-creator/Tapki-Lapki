@@ -22,4 +22,7 @@ public class Product {
 
     @Column(name = "image_url")
     private String imageURL;
+
+    @Column(name = "price")
+    private Double priceOfProduct;
 }
