@@ -45,11 +45,8 @@ CREATE TABLE IF NOT EXISTS customer
     zip_code CHAR(5) NOT NULL,
     area_code VARCHAR(3) NOT NULL,
     phone_number VARCHAR(10) NOT NULL,
-    salesperson_id INT NOT NULL,
-    credit_limit DECIMAL(10,2) NOT NULL,
     comments VARCHAR(255),
     user_id int8 not null,
-    foreign key (salesperson_id) references employeе(id),
     foreign key (user_id) references user_t(id)
 );
 
