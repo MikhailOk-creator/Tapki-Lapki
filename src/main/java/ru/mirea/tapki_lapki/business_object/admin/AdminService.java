@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.mirea.tapki_lapki.business_object.order.Order;
+import ru.mirea.tapki_lapki.business_object.order.OrderRepo;
 import ru.mirea.tapki_lapki.business_object.order.Status;
 import ru.mirea.tapki_lapki.business_object.user.Role;
 import ru.mirea.tapki_lapki.business_object.user.User;
@@ -18,6 +19,7 @@ import java.util.Set;
 @Slf4j
 public class AdminService {
     private final UserRepo userRepo;
+    private final OrderRepo orderRepo;
 
     public List<User> allUsers() {
         return userRepo.findAll();
@@ -42,7 +44,7 @@ public class AdminService {
                 user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
                 user.setRoles(Set.of(role));
                 userRepo.save(user);
-                log.info("User with username {} saved");
+                log.info("User with username {} saved", username);
             } else {
                 log.error("Main data is not full!");
             }
@@ -52,7 +54,14 @@ public class AdminService {
     }
 
     public void changeStatusOfOrder(Long orderId, Status status) {
-        // Order order =
+        try {
+            Order order = orderRepo.getReferenceById(orderId);
+            order.setStatusOfOrder(status);
+            orderRepo.save(order);
+            log.info("The order status with id {} has changed successfully", order.getId());
+        } catch (Exception e) {
+            log.error("Error when changing the order status!");
+        }
     }
 
     public void changeUserActivity(Long id) {
