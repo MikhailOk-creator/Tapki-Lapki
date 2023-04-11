@@ -24,13 +24,10 @@ CREATE TABLE IF NOT EXISTS employeе
     first_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(50) NOT NULL,
     middle_initial CHAR(1),
-    manager_id INT,
     job_id INT NOT NULL,
     hire_date DATE NOT NULL,
     salary DECIMAL(10,2) NOT NULL,
-    commission DECIMAL(10,2),
     user_id int8 not null,
-    foreign key (manager_id) references employeе(id),
     foreign key (job_id) references job(id),
     foreign key (user_id) references user_t(id)
 );
