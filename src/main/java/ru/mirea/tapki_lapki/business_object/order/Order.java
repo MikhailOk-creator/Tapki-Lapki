@@ -3,6 +3,7 @@ package ru.mirea.tapki_lapki.business_object.order;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import ru.mirea.tapki_lapki.business_object.client.Client;
 
 import java.util.Date;
 
@@ -16,8 +17,9 @@ public class Order {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "costumer_id", nullable = false)
-    private Long customer_id;
+    @ManyToOne
+    @JoinColumn(name = "costumer_id")
+    private Client client;
 
     @Column(name = "order_date", nullable = false)
     private Date date;
