@@ -1,5 +1,11 @@
 type Query {
     users: [User]
+    products: [Product]
+    product(id: ID!): Product
+    orders: [Order]
+    order(id: ID!): Order
+    employees: [Employee]
+    employee(id: ID!): Employee
 }
 
 type User {
@@ -12,4 +18,69 @@ type User {
 
 type Role {
     role_name: String
+}
+
+type Product {
+    id: ID!
+    name: String!
+    description: String!
+    price: Float!
+    image_url: String!
+}
+
+type Order {
+    id: ID!
+    user: Client!
+    products: [Product]!
+    total: Float!
+    created_at: String!
+    ship_date: String!
+    status: String!
+}
+
+type Job {
+    id: ID!
+    function: String!
+}
+
+type Employee {
+    id: ID!
+    first_name: String!
+    last_name: String!
+    middle_name: String!
+    job: Job!
+    hire_date: String!
+    salary: Float!
+    user: User!
+}
+
+type Client {
+    id: ID!
+    name: String!
+    address: String!
+    city: String!
+    state: String!
+    zip: String!
+    area_code: String!
+    phone: String!
+    comments: String!
+    user: User!
+}
+
+type Mutation {
+    createProduct(name: String!, description: String!, price: Float!, image_url: String!): Product
+    updateProduct(id: ID!, name: String!, description: String!, price: Float!, image_url: String!): Product
+    deleteProduct(id: ID!): Product
+    createOrder(user_id: ID!, products: [ID]!, total: Float!, created_at: String!, ship_date: String!, status: String!): Order
+    updateOrder(id: ID!, user_id: ID!, products: [ID]!, total: Float!, created_at: String!, ship_date: String!, status: String!): Order
+    deleteOrder(id: ID!): Order
+    createEmployee(first_name: String!, last_name: String!, middle_name: String!, job_id: ID!, hire_date: String!, salary: Float!, user_id: ID!): Employee
+    updateEmployee(id: ID!, first_name: String!, last_name: String!, middle_name: String!, job_id: ID!, hire_date: String!, salary: Float!, user_id: ID!): Employee
+    deleteEmployee(id: ID!): Employee
+    createClient(name: String!, address: String!, city: String!, state: String!, zip: String!, area_code: String!, phone: String!, comments: String!, user_id: ID!): Client
+    updateClient(id: ID!, name: String!, address: String!, city: String!, state: String!, zip: String!, area_code: String!, phone: String!, comments: String!, user_id: ID!): Client
+    deleteClient(id: ID!): Client
+    createUser(username: String!, email: String!, password: String!, active: Boolean!, roles: [String]!): User
+    updateUser(id: ID!, username: String!, email: String!, password: String!, active: Boolean!, roles: [String]!): User
+    deleteUser(id: ID!): User
 }
