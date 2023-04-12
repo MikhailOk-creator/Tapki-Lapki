@@ -47,4 +47,9 @@ public class ClientService {
             itemRepo.delete(item);
         }
     }
+
+    public void placeOrder(Long clientId) {
+        Client client = clientRepo.findById(clientId).orElseThrow();
+        orderRepo.findByClientAndStatus(client, Status.CART).setStatusOfOrder(Status.NEW);
+    }
 }
