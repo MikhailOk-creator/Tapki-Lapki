@@ -23,8 +23,8 @@ public class ClientService {
         Product product = productRepo.findById(productId).orElseThrow();
         Client client = clientRepo.findById(clientId).orElseThrow();
         Item item = new Item();
-        if (itemRepo.findByProductAndOrder(product, orderRepo.findByClientAndStatus(client, Status.CART)) != null) {
-            item = itemRepo.findByProductAndOrder(product, orderRepo.findByClientAndStatus(client, Status.CART));
+        if (itemRepo.findByProductAndOrder(product, orderRepo.findByClientAndStatusOfOrder(client, Status.CART)) != null) {
+            item = itemRepo.findByProductAndOrder(product, orderRepo.findByClientAndStatusOfOrder(client, Status.CART));
             item.setQuantity(item.getQuantity() + 1);
             item.setTotalPrice(item.getTotalPrice() + product.getPriceOfProduct());
         } else {
@@ -38,7 +38,7 @@ public class ClientService {
     public void deleteProductFromCart(Long productId, Long clientId) {
         Product product = productRepo.findById(productId).orElseThrow();
         Client client = clientRepo.findById(clientId).orElseThrow();
-        Item item = itemRepo.findByProductAndOrder(product, orderRepo.findByClientAndStatus(client, Status.CART));
+        Item item = itemRepo.findByProductAndOrder(product, orderRepo.findByClientAndStatusOfOrder(client, Status.CART));
         if (item.getQuantity() > 1) {
             item.setQuantity(item.getQuantity() - 1);
             item.setTotalPrice(item.getTotalPrice() - product.getPriceOfProduct());
@@ -50,6 +50,6 @@ public class ClientService {
 
     public void placeOrder(Long clientId) {
         Client client = clientRepo.findById(clientId).orElseThrow();
-        orderRepo.findByClientAndStatus(client, Status.CART).setStatusOfOrder(Status.NEW);
+        orderRepo.findByClientAndStatusOfOrder(client, Status.CART).setStatusOfOrder(Status.NEW);
     }
 }
