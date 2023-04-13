@@ -80,7 +80,7 @@ type Mutation {
     createClient(name: String!, address: String!, city: String!, state: String!, zip: String!, area_code: String!, phone: String!, comments: String!, user_id: ID!): Client
     updateClient(id: ID!, name: String!, address: String!, city: String!, state: String!, zip: String!, area_code: String!, phone: String!, comments: String!, user_id: ID!): Client
     deleteClient(id: ID!): Client
-    createUser(username: String!, email: String!, password: String!, active: Boolean!, roles: [String]!): User
+    createUser(username: String!, email: String!, password: String!, role: String!): User
     updateUser(id: ID!, username: String!, email: String!, password: String!, active: Boolean!, roles: [String]!): User
     deleteUser(id: ID!): User
 }
