@@ -23,16 +23,7 @@ public class UserService {
         user.setPassword(password);
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         user.setEmail(email);
-        switch (role) {
-            case "client":
-                user.setRoles(Set.of(Role.USER));
-                break;
-            case "manager":
-                user.setRoles(Set.of(Role.MANAGER));
-                break;
-            case "admin":
-                user.setRoles(Set.of(Role.ADMIN));
-        }
+        user.setRoles(Set.of(Role.USER));
         user.setActive(true);
         userRepo.save(user);
         log.info("Created new user (username: {})", user.getUsername());
