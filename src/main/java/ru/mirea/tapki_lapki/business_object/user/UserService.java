@@ -2,6 +2,7 @@ package ru.mirea.tapki_lapki.business_object.user;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
@@ -16,13 +17,16 @@ public class UserService {
         return userRepo.findById(id).orElse(null);
     }
 
-    public void registerUser(String username, String password, String email, String role) {
+    public User registerUser(String username, String password, String email, String role) {
         User user = new User();
         user.setUsername(username);
         user.setPassword(password);
+        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         user.setEmail(email);
-        user.setRoles(Set.of(Role.valueOf(role)));
+        user.setRoles(Set.of(Role.USER));
         user.setActive(true);
         userRepo.save(user);
+        log.info("Created new user (username: {})", user.getUsername());
+        return user;
     }
 }

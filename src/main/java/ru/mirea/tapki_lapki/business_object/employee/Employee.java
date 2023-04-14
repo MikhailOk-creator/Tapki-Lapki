@@ -34,7 +34,7 @@ public class Employee {
     private Date hire_date;
 
     @Column(name = "salary", nullable = false)
-    private int salary;
+    private Double salary;
 
     @OneToOne
     @JoinColumn(name = "user_id")
