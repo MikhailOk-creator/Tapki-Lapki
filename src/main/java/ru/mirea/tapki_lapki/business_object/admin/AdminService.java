@@ -37,10 +37,6 @@ public class AdminService {
             User user = new User();
             if (userRepo.findByUsername(username) == null) {
 
-                log.info("Data in .env: " + "\n" +
-                        "Username: " + username + '\n' +
-                        "Email: " + email + '\n');
-
                 if ((username != null && !username.equals(""))  &&
                         (password != null && !password.equals("")) &&
                         (email != null && !email.equals(""))) {
@@ -60,6 +56,15 @@ public class AdminService {
                     userRepo.save(user);
                 } else {
                     user = userRepo.findByUsername(username);
+                    switch (role) {
+                        case "manager":
+                            user.setRoles(Set.of(Role.MANAGER));
+                            break;
+                        case "admin":
+                            user.setRoles(Set.of(Role.ADMIN));
+                            break;
+                    }
+                    userRepo.save(user);
                 }
 
                 Employee new_employee = new Employee();

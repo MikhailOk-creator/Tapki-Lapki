@@ -74,13 +74,13 @@ type Mutation {
     createOrder(user_id: ID!, products: [ID]!, total: Float!, created_at: String!, ship_date: String!, status: String!): Order
     updateOrder(id: ID!, user_id: ID!, products: [ID]!, total: Float!, created_at: String!, ship_date: String!, status: String!): Order
     deleteOrder(id: ID!): Order
-    createEmployee(first_name: String!, last_name: String!, middle_name: String!, job_id: ID!, hire_date: String!, salary: Float!, user_id: ID!): Employee
+    createEmployee(username: String!, password: String!, email: String!, role: String! first_name: String!, last_name: String!, middle_name: String!, job_id: ID!, salary: Float!): Employee
     updateEmployee(id: ID!, first_name: String!, last_name: String!, middle_name: String!, job_id: ID!, hire_date: String!, salary: Float!, user_id: ID!): Employee
-    deleteEmployee(id: ID!): Employee
+    deleteEmployee(username: String!, email: String!, password: String!, role: String!, firstName: String!, lastName: String!, middleName: String!, jobId: Int!, salary: Float!): Employee
     createClient(name: String!, address: String!, city: String!, state: String!, zip: String!, area_code: String!, phone: String!, comments: String!, user_id: ID!): Client
     updateClient(id: ID!, name: String!, address: String!, city: String!, state: String!, zip: String!, area_code: String!, phone: String!, comments: String!, user_id: ID!): Client
     deleteClient(id: ID!): Client
-    createUser(username: String!, email: String!, password: String!, role: String!, firstName: String!, lastName: String!, middleName: String!, jobId: Int!, salary: Float!): Employee
+    createUser(username: String!, email: String!, password: String!): User
     createJob(function: String!): Job
     updateUser(id: ID!, username: String!, email: String!, password: String!, active: Boolean!, roles: [String]!): User
     deleteUser(id: ID!): User
