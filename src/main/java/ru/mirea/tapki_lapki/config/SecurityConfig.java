@@ -22,9 +22,9 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-//                .requestMatchers("/graphiql").permitAll()
-//                .requestMatchers("/graphql").permitAll()
-                .anyRequest().authenticated().and().httpBasic()
+                .requestMatchers("/graphiql").authenticated()
+                .requestMatchers("/graphql").permitAll()
+                .and().httpBasic()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         return http.build();
