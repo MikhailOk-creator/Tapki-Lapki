@@ -5,6 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
+import ru.mirea.tapki_lapki.business_object.admin.AdminService;
+import ru.mirea.tapki_lapki.business_object.employee.Job;
+import ru.mirea.tapki_lapki.business_object.employee.JobRepo;
 import ru.mirea.tapki_lapki.business_object.user.Role;
 import ru.mirea.tapki_lapki.business_object.user.User;
 import ru.mirea.tapki_lapki.business_object.user.UserRepo;
@@ -20,7 +23,10 @@ import static ru.mirea.tapki_lapki.business_object.user.Role.SUPER_ADMIN;
 @RequiredArgsConstructor
 public class StartupConfig implements ApplicationRunner {
     private final UserRepo userRepo;
+    private final JobRepo jobRepo;
     private final SuperAdminService superAdminService;
+    private final AdminService adminService;
+
     @Override
     public void run(ApplicationArguments args) throws Exception {
         List<User> usersInDB = userRepo.findAll();
@@ -37,7 +43,6 @@ public class StartupConfig implements ApplicationRunner {
                 }
             }
         }
-
         if (user == null) {
             log.warn("Admin not found. Creating...");
             if(superAdminService.addSuperAdmin()) {
@@ -47,6 +52,28 @@ public class StartupConfig implements ApplicationRunner {
             }
         } else {
             log.info("Admin already exists");
+        }
+
+        List<Job> JobsInDB = jobRepo.findAll();
+        Job job = null;
+        if (JobsInDB.size() >= 0) {
+            log.info("Founded jobs in Database");
+            for (Job j : JobsInDB) {
+                if (j.getFunction().equals("System Administrator")) {
+                    log.info("Job System Administrator already exists");
+                    job = j;
+                    break;
+                }
+            }
+        }
+        if (job == null) {
+            log.warn("Job System Administrator not found. Creating...");
+            try {
+                adminService.addJob("System Administrator");
+                log.info("Job System Administrator created");
+            } catch (Exception e) {
+                log.error("Job System Administrator not created");
+            }
         }
     }
 }
