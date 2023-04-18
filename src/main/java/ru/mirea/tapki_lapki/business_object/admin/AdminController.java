@@ -5,6 +5,7 @@ import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
+import ru.mirea.tapki_lapki.business_object.employee.Employee;
 import ru.mirea.tapki_lapki.business_object.employee.Job;
 import ru.mirea.tapki_lapki.business_object.order.Status;
 import ru.mirea.tapki_lapki.business_object.user.Role;
@@ -21,16 +22,16 @@ public class AdminController {
     }
 
     @MutationMapping("createEmployee")
-    public void addUserEmployee(@Argument String username,
-                                @Argument String password,
-                                @Argument String email,
-                                @Argument String role,
-                                @Argument String first_name,
-                                @Argument String last_name,
-                                @Argument String middle_name,
-                                @Argument Long job_id,
-                                @Argument Double salary) {
-        adminService.addUserEmployee(username, password, email, role, first_name, last_name, middle_name, job_id, salary);
+    public Employee addUserEmployee(@Argument String username,
+                                    @Argument String password,
+                                    @Argument String email,
+                                    @Argument String role,
+                                    @Argument String firstName,
+                                    @Argument String lastName,
+                                    @Argument String middleName,
+                                    @Argument Long job_id,
+                                    @Argument Double salary) {
+        return adminService.addUserEmployee(username, password, email, role, firstName, lastName, middleName, job_id, salary);
     }
 
     @MutationMapping()
