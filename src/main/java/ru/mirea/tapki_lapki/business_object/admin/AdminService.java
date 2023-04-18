@@ -82,21 +82,21 @@ public class AdminService {
             new_employee.setFirstName(firstName);
             new_employee.setLastName(lastName);
             new_employee.setMiddleName(middleName);
-            log.info("Set info about name");
+            // log.info("Set info about name");
             new_employee.setJob(jobRepo.findById(jobId).orElse(null));
-            log.info("Set info about job");
+            // log.info("Set info about job");
             new_employee.setSalary(salary);
-            log.info("Set info about salary");
+            // log.info("Set info about salary");
 
             if (user.getEmail().contains("@tapkil.ru")) {
                 new_employee.setEmail(user.getEmail());
             } else {
                 new_employee.setEmail(email);
             }
-            log.info("Set email: {}", new_employee.getEmail());
+            // log.info("Set email: {}", new_employee.getEmail());
 
             new_employee.setHire_date(new java.sql.Date(System.currentTimeMillis()));
-            log.info("Set info about hire date");
+            // log.info("Set info about hire date");
             employeeRepo.save(new_employee);
 
             log.info("Employee with username {} saved", username);
