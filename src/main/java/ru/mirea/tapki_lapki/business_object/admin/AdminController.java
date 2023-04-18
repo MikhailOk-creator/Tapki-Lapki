@@ -25,12 +25,12 @@ public class AdminController {
                                 @Argument String password,
                                 @Argument String email,
                                 @Argument String role,
-                                @Argument String firstName,
-                                @Argument String lastName,
-                                @Argument String middleName,
-                                @Argument Long jobId,
+                                @Argument String first_name,
+                                @Argument String last_name,
+                                @Argument String middle_name,
+                                @Argument Long job_id,
                                 @Argument Double salary) {
-        adminService.addUserEmployee(username, password, email, role, firstName, lastName, middleName, jobId, salary);
+        adminService.addUserEmployee(username, password, email, role, first_name, last_name, middle_name, job_id, salary);
     }
 
     @MutationMapping()

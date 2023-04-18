@@ -35,6 +35,7 @@ public class AdminService {
                                 String firstName, String lastName, String middleName, Long jobId, Double salary) {
         try {
             User user = new User();
+            log.info("Trying to find user by username {}", username);
             if (userRepo.findByUsername(username) == null) {
 
                 if ((username != null && !username.equals(""))  &&
@@ -52,39 +53,57 @@ public class AdminService {
                             break;
                         case "admin":
                             user.setRoles(Set.of(Role.ADMIN));
+                            break;
                     }
                     userRepo.save(user);
                 } else {
-                    user = userRepo.findByUsername(username);
-                    switch (role) {
-                        case "manager":
-                            user.setRoles(Set.of(Role.MANAGER));
-                            break;
-                        case "admin":
-                            user.setRoles(Set.of(Role.ADMIN));
-                            break;
-                    }
-                    userRepo.save(user);
+                    log.error("Main data is not full!");
+                    return null;
                 }
-
-                Employee new_employee = new Employee();
-                new_employee.setUser(user);
-                new_employee.setFirstName(firstName);
-                new_employee.setLastName(lastName);
-                new_employee.setMiddleName(middleName);
-                new_employee.setJob(jobRepo.getReferenceById(jobId));
-                new_employee.setSalary(salary);
-                new_employee.setHire_date(new java.sql.Date(System.currentTimeMillis()));
-                employeeRepo.save(new_employee);
-
-                log.info("Employee with username {} saved", username);
-                return new_employee;
             } else {
-                log.error("Main data is not full!");
-                return null;
+                log.info("Founded user in Database");
+                user = userRepo.findByUsername(username);
+                switch (role) {
+                    case "manager":
+                        user.setRoles(Set.of(Role.MANAGER));
+                        break;
+                    case "admin":
+                        user.setRoles(Set.of(Role.ADMIN));
+                        break;
+                    default:
+                        break;
+                }
+                userRepo.save(user);
             }
+
+            log.info("Start to create employee");
+            Employee new_employee = new Employee();
+            new_employee.setUser(user);
+            new_employee.setFirstName(firstName);
+            new_employee.setLastName(lastName);
+            new_employee.setMiddleName(middleName);
+            log.info("Set info about name");
+            new_employee.setJob(jobRepo.findById(jobId).orElse(null));
+            log.info("Set info about job");
+            new_employee.setSalary(salary);
+            log.info("Set info about salary");
+
+            if (user.getEmail().contains("@tapkil.ru")) {
+                new_employee.setEmail(user.getEmail());
+            } else {
+                new_employee.setEmail(email);
+            }
+            log.info("Set email: {}", new_employee.getEmail());
+
+            new_employee.setHire_date(new java.sql.Date(System.currentTimeMillis()));
+            log.info("Set info about hire date");
+            employeeRepo.save(new_employee);
+
+            log.info("Employee with username {} saved", username);
+            return new_employee;
         } catch (Exception e) {
             log.error("Something went wrong in the process of writing to the database!");
+            log.error(e.getMessage());
             return null;
         }
     }

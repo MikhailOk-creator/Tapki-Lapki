@@ -18,12 +18,12 @@ CREATE TABLE IF NOT EXISTS job
     function VARCHAR(58) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS employeе
+CREATE TABLE IF NOT EXISTS employee
 (
     id INT NOT NULL GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     first_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(50) NOT NULL,
-    middle_initial CHAR(1),
+    middle_name VARCHAR(50),
     job_id INT NOT NULL,
     hire_date DATE NOT NULL,
     salary DECIMAL(10,2) NOT NULL,
