@@ -27,6 +27,7 @@ CREATE TABLE IF NOT EXISTS employeе
     job_id INT NOT NULL,
     hire_date DATE NOT NULL,
     salary DECIMAL(10,2) NOT NULL,
+    working_email VARCHAR(150) NOT NULL,
     user_id int8 not null,
     foreign key (job_id) references job(id),
     foreign key (user_id) references user_t(id)

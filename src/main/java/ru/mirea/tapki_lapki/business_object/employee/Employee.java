@@ -36,6 +36,9 @@ public class Employee {
     @Column(name = "salary", nullable = false)
     private Double salary;
 
+    @Column(name = "working_email", nullable = false)
+    private String email;
+
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
