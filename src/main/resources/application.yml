@@ -1,11 +1,12 @@
 spring:
   datasource:
-    url: jdbc:postgresql://${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}
-    username: ${POSTGRES_USER}
-    password: ${POSTGRES_PASSWORD}
+    url: jdbc:postgresql://localhost:5432/tapki_lapki_database
+    username: postgres
+    password: 1234
     driver-class-name: org.postgresql.Driver
   jpa:
     database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
     generate-ddl: false
   graphql:
     graphiql:
