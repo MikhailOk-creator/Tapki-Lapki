@@ -9,6 +9,7 @@ import ru.mirea.tapki_lapki.business_object.product.Product;
 import ru.mirea.tapki_lapki.business_object.product.ProductRepo;
 
 import java.io.File;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -19,6 +20,10 @@ public class ManagerService {
     private String uploadPath;
 
     private final ProductRepo productRepo;
+
+    public List<Product> allProducts() {
+        return productRepo.findAll();
+    }
 
     public void addProduct (Product product) {
         try {
