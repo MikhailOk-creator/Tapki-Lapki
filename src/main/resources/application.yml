@@ -6,7 +6,6 @@ spring:
     driver-class-name: org.postgresql.Driver
   jpa:
     database: postgresql
-    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
     generate-ddl: false
   graphql:
     graphiql:
@@ -17,11 +16,11 @@ logging:
     name: /back_info/tapki_lapki_backend.log
 
 admin:
-  username: ${ADMIN_USERNAME}
-  password: ${ADMIN_PASSWORD}
-  email: ${ADMIN_EMAIL}
-  real_name: ${ADMIN_REAL_NAME}
-  second_name: ${ADMIN_SECOND_NAME}
+  username: MikhailOk
+  password: 123456
+  email: ADMIN_EMAIL=mikhail.okhapkin@yandex.ru
+  real_name:
+  second_name:
 
 upload:
-  path: ${DATA_DIR}
+  path: /storage
