@@ -28,7 +28,7 @@ public class AdminService {
     private final JobRepo jobRepo;
 
     public List<User> allUsers() {
-        return userRepo.findAll();
+        return userRepo.findAllByOrderByIdAsc();
     }
 
     public Employee addUserEmployee(String username, String password, String email, String role,

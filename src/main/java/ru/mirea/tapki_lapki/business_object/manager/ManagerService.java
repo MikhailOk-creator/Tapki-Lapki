@@ -85,11 +85,12 @@ public class ManagerService {
             edit_product.setImageURL(resultFileName);
 
             try {
-                image_file.transferTo(new File(uploadPath + "/" + resultFileName));
+                String result_path = uploadPath + "/" + resultFileName;
+                image_file.transferTo(new File(result_path));
                 log.info("File {} uploaded", resultFileName);
                 productRepo.save(edit_product);
                 log.info("Product with id {} updated");
-                return new String(uploadPath + "/" + resultFileName);
+                return result_path;
             } catch (Exception e) {
                 log.error("File {} not uploaded", resultFileName);
                 e.printStackTrace();
