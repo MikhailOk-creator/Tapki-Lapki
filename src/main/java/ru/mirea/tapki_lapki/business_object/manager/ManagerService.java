@@ -34,7 +34,7 @@ public class ManagerService {
         }
     }
 
-    public void editProduct (Long id, String name_p, String description, String image_url) {
+    public void editProduct (Long id, String name_p, String description, MultipartFile image) {
         try {
             Product edit_product = productRepo.findByNameOfProduct(productRepo.findById(id).get().getNameOfProduct());
 
@@ -44,6 +44,7 @@ public class ManagerService {
             if (description != null && description != "") {
                 edit_product.setDescription(description);
             }
+            String image_url = uploadImage(id, image);
             if (image_url != null && image_url != "") {
                 edit_product.setImageURL(image_url);
             }
@@ -69,7 +70,7 @@ public class ManagerService {
         }
     }
 
-    public void uploadImage (Long product_id, MultipartFile image_file) {
+    public String uploadImage (Long product_id, MultipartFile image_file) {
         if (productRepo.findById(product_id) != null && image_file != null && !image_file.getOriginalFilename().isEmpty()) {
             Product edit_product = productRepo.findByNameOfProduct(productRepo.findById(product_id).get().getNameOfProduct());
 
@@ -84,14 +85,19 @@ public class ManagerService {
             edit_product.setImageURL(resultFileName);
 
             try {
-                image_file.transferTo(new File(uploadPath + "/" + resultFileName));
+                String result_path = uploadPath + "/" + resultFileName;
+                image_file.transferTo(new File(result_path));
                 log.info("File {} uploaded", resultFileName);
                 productRepo.save(edit_product);
                 log.info("Product with id {} updated");
+                return result_path;
             } catch (Exception e) {
                 log.error("File {} not uploaded", resultFileName);
                 e.printStackTrace();
+                return null;
             }
+        } else {
+            return null;
         }
     }
 }
