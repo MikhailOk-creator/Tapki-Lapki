@@ -18,7 +18,7 @@ logging:
 admin:
   username: MikhailOk
   password: 123456
-  email: ADMIN_EMAIL=mikhail.okhapkin@yandex.ru
+  email: mikhail.okhapkin@yandex.ru
   real_name:
   second_name:
 
