@@ -18,6 +18,12 @@ import ru.mirea.tapki_lapki.business_object.user.UserRepo;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Service for admin
+ *
+ * This service contains methods for admin.
+ * Admin can see all users, add employee, add job, change status of order, change user's activity.
+ */
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -27,10 +33,33 @@ public class AdminService {
     private final EmployeeRepo employeeRepo;
     private final JobRepo jobRepo;
 
+    /**
+     * Method for get all users
+     *
+     * @return list of all users
+     */
     public List<User> allUsers() {
         return userRepo.findAllByOrderByIdAsc();
     }
 
+    /**
+     * Method for create new employee
+     *
+     * First of all method check if user with this username already exist in database.
+     * If user already exist method will use this user and change his role.
+     * After that method will create new employee and save it in database.
+     *
+     * @param username username of new employee
+     * @param password password of new employee. Password can be null only if User already exist
+     * @param email email of new employee. Email can be null only if User's email contains a domain "@tapkil.ru"
+     * @param role role of new user. Parameter not null
+     * @param firstName first name of new employee. Parameter not null
+     * @param lastName last name of new employee. Parameter not null
+     * @param middleName middle name of new employee. Parameter not null
+     * @param jobId job id of new employee. Parameter not null. Job is not equal to User's role
+     * @param salary salary of new employee. Parameter not null
+     * @return new employee object or null if something went wrong
+     */
     public Employee addUserEmployee(String username, String password, String email, String role,
                                 String firstName, String lastName, String middleName, Long jobId, Double salary) {
         try {
@@ -108,6 +137,12 @@ public class AdminService {
         }
     }
 
+    /**
+     * Method for create new job
+     *
+     * @param function function of new job
+     * @return new job object or null if something went wrong
+     */
     public Job addJob(String function) {
         try {
             Job new_job = new Job();
@@ -121,6 +156,12 @@ public class AdminService {
         }
     }
 
+    /**
+     * Method for change status of order
+     *
+     * @param orderId id of order
+     * @param status new status of order
+     */
     public void changeStatusOfOrder(Long orderId, Status status) {
         try {
             Order order = orderRepo.getReferenceById(orderId);
@@ -132,6 +173,11 @@ public class AdminService {
         }
     }
 
+    /**
+     * Method for change activity status of user
+     *
+     * @param id id of user
+     */
     public void changeUserActivity(Long id) {
         try {
             User user = userRepo.findByUsername(userRepo.getReferenceById(id).getUsername());

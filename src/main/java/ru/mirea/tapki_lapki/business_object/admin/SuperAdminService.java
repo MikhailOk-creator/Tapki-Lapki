@@ -11,6 +11,13 @@ import ru.mirea.tapki_lapki.business_object.user.UserRepo;
 
 import java.util.Set;
 
+/**
+ * Service for super admin
+ *
+ * Super admin have more rights than ordinary admin.
+ * This service contains methods for super admin.
+ * Super admin can add new super admin.
+ */
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -27,6 +34,14 @@ public class SuperAdminService {
     private String second_name;
     private final UserRepo userRepo;
 
+    /**
+     * Method for add new super admin
+     *
+     * All data for new super admin is in .env file.
+     * If data in .env file is null or empty method will return false.
+     * If you start project not from docker, you need to add data in application.yml file.
+     * @return - true if super admin was added, false if super admin wasn't added
+     */
     public boolean addSuperAdmin() {
         try {
             User user = new User();
