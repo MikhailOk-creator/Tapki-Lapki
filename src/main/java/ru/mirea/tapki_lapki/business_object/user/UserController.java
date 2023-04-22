@@ -12,11 +12,24 @@ import ru.mirea.tapki_lapki.business_object.admin.AdminService;
 public class UserController {
     private final UserService userService;
 
+    /**
+     * Method for getting user by id
+     * @param id
+     * @return
+     */
     @QueryMapping
     public User user(Long id) {
         return userService.getUserById(id);
     }
 
+    /**
+     * Method for registering user
+     * @param username username of user
+     * @param password password of user
+     * @param email email of user
+     * @param role role of user
+     * @return user that was registered
+     */
     @MutationMapping
     public User createUser (@Argument String username,
                             @Argument String password,

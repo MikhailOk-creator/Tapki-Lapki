@@ -13,11 +13,19 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+/**
+ * Security config
+ */
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final UserDetailsService userDetailsService;
+    /**
+     * Method for configuring security. Path /graphql is available for all users, path /graphiql is available only for authenticated users.
+     * @param http
+     * @throws Exception
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
@@ -30,6 +38,10 @@ public class SecurityConfig {
         return http.build();
     }
 
+    /**
+     * Method for configuring authentication
+     * @return
+     */
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
@@ -38,10 +50,19 @@ public class SecurityConfig {
         return provider;
     }
 
+    /**
+     * Method for configuring password encoder
+     * @return
+     */
     private BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * Method for configuring authentication manager
+     * @param authenticationConfiguration
+     * @throws Exception
+     */
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();

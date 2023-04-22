@@ -4,6 +4,10 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Job entity
+ * @see Employee
+ */
 @Entity
 @Getter
 @Setter

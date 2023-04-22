@@ -12,19 +12,31 @@ import java.io.File;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Service for manager
+ */
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class ManagerService {
+    /// Path to upload images
     @Value("${upload.path}")
     private String uploadPath;
 
     private final ProductRepo productRepo;
 
+    /**
+     * Method for getting all products
+     * @return list of products
+     */
     public List<Product> allProducts() {
         return productRepo.findAll();
     }
 
+    /**
+     * Method for getting product by id
+     * @param product product that we want to add to database of store/
+     */
     public void addProduct (Product product) {
         try {
             productRepo.save(product);
@@ -34,6 +46,13 @@ public class ManagerService {
         }
     }
 
+    /**
+     * Method for editing product
+     * @param id id of product that we want to edit
+     * @param name_p new name of product
+     * @param description new description of product
+     * @param image new image of product
+     */
     public void editProduct (Long id, String name_p, String description, MultipartFile image) {
         try {
             Product edit_product = productRepo.findByNameOfProduct(productRepo.findById(id).get().getNameOfProduct());
@@ -56,6 +75,10 @@ public class ManagerService {
         }
     }
 
+    /**
+     * Method for deleting product
+     * @param id id of product that we want to delete
+     */
     public void deletedProduct (Long id) {
         try {
             if (productRepo.findById(id).isPresent()) {
@@ -70,6 +93,12 @@ public class ManagerService {
         }
     }
 
+    /**
+     * Method for uploading image
+     * @param product_id id of product that we want to add image
+     * @param image_file image that we want to add
+     * @return path to image
+     */
     public String uploadImage (Long product_id, MultipartFile image_file) {
         if (productRepo.findById(product_id) != null && image_file != null && !image_file.getOriginalFilename().isEmpty()) {
             Product edit_product = productRepo.findByNameOfProduct(productRepo.findById(product_id).get().getNameOfProduct());

@@ -10,6 +10,9 @@ import ru.mirea.tapki_lapki.business_object.order.Status;
 import ru.mirea.tapki_lapki.business_object.product.Product;
 import ru.mirea.tapki_lapki.business_object.product.ProductRepo;
 
+/**
+ * Service for client
+ */
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -19,6 +22,11 @@ public class ClientService {
     private final ClientRepo clientRepo;
     private final OrderRepo orderRepo;
 
+    /**
+     * Method for adding product to cart
+     * @param productId id of product
+     * @param clientId id of client
+     */
     public void addProductToCart(Long productId, Long clientId) {
         Product product = productRepo.findById(productId).orElseThrow();
         Client client = clientRepo.findById(clientId).orElseThrow();
@@ -35,6 +43,11 @@ public class ClientService {
         itemRepo.save(item);
     }
 
+    /**
+     * Method for deleting product from cart
+     * @param productId id of product
+     * @param clientId id of client
+     */
     public void deleteProductFromCart(Long productId, Long clientId) {
         Product product = productRepo.findById(productId).orElseThrow();
         Client client = clientRepo.findById(clientId).orElseThrow();
@@ -48,6 +61,10 @@ public class ClientService {
         }
     }
 
+    /**
+     * Method for placing order
+     * @param clientId id of client
+     */
     public void placeOrder(Long clientId) {
         Client client = clientRepo.findById(clientId).orElseThrow();
         orderRepo.findByClientAndStatusOfOrder(client, Status.CART).setStatusOfOrder(Status.NEW);

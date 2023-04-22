@@ -7,6 +7,10 @@ import ru.mirea.tapki_lapki.business_object.client.Client;
 
 import java.util.Date;
 
+/**
+ * Order entity
+ * @see Client
+ */
 @Entity
 @Getter
 @Setter

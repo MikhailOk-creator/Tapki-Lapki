@@ -5,6 +5,10 @@ import lombok.Getter;
 import lombok.Setter;
 import ru.mirea.tapki_lapki.business_object.user.User;
 
+/**
+ * Client entity
+ * @see User
+ */
 @Entity
 @Getter
 @Setter

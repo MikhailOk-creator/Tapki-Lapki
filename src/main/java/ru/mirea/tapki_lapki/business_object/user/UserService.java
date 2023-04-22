@@ -7,16 +7,32 @@ import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
+/**
+ * Service for User
+ */
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class UserService {
     private final UserRepo userRepo;
 
+    /**
+     * Method for getting user by id
+     * @param id id of user
+     * @return user
+     */
     public User getUserById(Long id) {
         return userRepo.findById(id).orElse(null);
     }
 
+    /**
+     * Method for registering user
+     * @param username username of user
+     * @param password password of user
+     * @param email email of user
+     * @param role role of user
+     * @return user that was registered
+     */
     public User registerUser(String username, String password, String email, String role) {
         User user = new User();
         user.setUsername(username);

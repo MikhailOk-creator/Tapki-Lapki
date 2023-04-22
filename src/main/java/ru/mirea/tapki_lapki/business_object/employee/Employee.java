@@ -7,6 +7,10 @@ import ru.mirea.tapki_lapki.business_object.user.User;
 
 import java.util.Date;
 
+/**
+ * Employee entity
+ * @see User
+ */
 @Entity
 @Getter
 @Setter

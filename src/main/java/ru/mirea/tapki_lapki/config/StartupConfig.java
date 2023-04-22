@@ -18,6 +18,9 @@ import java.util.Set;
 
 import static ru.mirea.tapki_lapki.business_object.user.Role.SUPER_ADMIN;
 
+/**
+ * Class for creating admin and job System Administrator on startup
+ */
 @Component
 @Slf4j
 @RequiredArgsConstructor
@@ -27,6 +30,13 @@ public class StartupConfig implements ApplicationRunner {
     private final SuperAdminService superAdminService;
     private final AdminService adminService;
 
+    /**
+     * Method for creating admin and job System Administrator on startup
+     * First, it checks if there is an admin in the database. If there is, it does nothing. If there is not, it creates one. Gets data from .env file.
+     * Then it checks if there is a job System Administrator in the database. If there is, it does nothing. If there is not, it creates one.
+     * @param args
+     * @throws Exception
+     */
     @Override
     public void run(ApplicationArguments args) throws Exception {
         List<User> usersInDB = userRepo.findAll();

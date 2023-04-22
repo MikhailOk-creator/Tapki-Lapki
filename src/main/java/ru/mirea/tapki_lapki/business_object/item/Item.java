@@ -6,6 +6,11 @@ import lombok.Setter;
 import ru.mirea.tapki_lapki.business_object.order.Order;
 import ru.mirea.tapki_lapki.business_object.product.Product;
 
+/**
+ * Item entity. Help to create order and cart
+ * @see Order
+ * @see Product
+ */
 @Entity
 @Getter
 @Setter
