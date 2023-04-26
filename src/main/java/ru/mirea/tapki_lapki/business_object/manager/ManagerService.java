@@ -48,7 +48,7 @@ public class ManagerService {
             product.setNameOfProduct(name_p);
             product.setDescription(description);
             product.setPriceOfProduct(price);
-            product.setImageURL(uploadImage(product.getId(), image));
+            // product.setImageURL(uploadImage(product.getId(), image));
 
             productRepo.save(product);
             log.info("Save new product");

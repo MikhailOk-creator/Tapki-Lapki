@@ -19,11 +19,11 @@ public class ManagerController {
     }
 
     @MutationMapping("createProduct")
-    public Product addProduct(@Argument String name,
+    public Product addProduct(@Argument String nameOfProduct,
                               @Argument String description,
                               @Argument Double price,
                               @Argument MultipartFile image) {
-        return managerService.addProduct(name, description, price, image);
+        return managerService.addProduct(nameOfProduct, description, price, image);
 
     }
 }

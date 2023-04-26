@@ -22,7 +22,7 @@ type Role {
 
 type Product {
     id: ID!
-    name: String!
+    nameOfProduct: String!
     description: String!
     price: Float!
     image_url: String!
@@ -67,10 +67,8 @@ type Client {
     user: User!
 }
 
-scalar Upload
-
 type Mutation {
-    createProduct(name: String!, description: String!, price: Float!, image: Upload!): Product
+    createProduct(nameOfProduct: String!, description: String!, price: Float!): Product
     updateProduct(id: ID!, name: String!, description: String!, price: Float!, image_url: String!): Product
     deleteProduct(id: ID!): Product
     createOrder(user_id: ID!, products: [ID]!, total: Float!, created_at: String!, ship_date: String!, status: String!): Order
