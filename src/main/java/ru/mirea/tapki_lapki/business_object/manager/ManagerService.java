@@ -35,14 +35,27 @@ public class ManagerService {
 
     /**
      * Method for getting product by id
-     * @param product product that we want to add to database of store/
+     * @param name_p name of product
+     * @param description description of product
+     * @param price price of product
+     * @param image image of product
+     * @return product
      */
-    public void addProduct (Product product) {
+    public Product addProduct (String name_p, String description, Double price, MultipartFile image) {
         try {
+            Product product = new Product();
+
+            product.setNameOfProduct(name_p);
+            product.setDescription(description);
+            product.setPriceOfProduct(price);
+            product.setImageURL(uploadImage(product.getId(), image));
+
             productRepo.save(product);
             log.info("Save new product");
+            return product;
         } catch (Exception e) {
             log.error("Error! No new product added");
+            return null;
         }
     }
 
