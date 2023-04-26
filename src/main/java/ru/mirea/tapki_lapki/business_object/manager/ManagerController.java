@@ -32,6 +32,11 @@ public class ManagerController {
                         @Argument String nameOfProduct,
                         @Argument String description,
                         @Argument Double price) {
-        return managerService.editProduct(id, nameOfProduct, description, price);;
+        return managerService.editProduct(id, nameOfProduct, description, price);
+    }
+
+    @MutationMapping("deleteProduct")
+    public Boolean delete(@Argument Long id) {
+        return  managerService.deletedProduct(id);
     }
 }

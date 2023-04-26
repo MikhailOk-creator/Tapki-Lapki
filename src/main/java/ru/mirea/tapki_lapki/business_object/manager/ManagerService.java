@@ -93,17 +93,20 @@ public class ManagerService {
      * Method for deleting product
      * @param id id of product that we want to delete
      */
-    public void deletedProduct (Long id) {
+    public Boolean deletedProduct (Long id) {
         try {
             if (productRepo.findById(id).isPresent()) {
                 String del_product_name = productRepo.findById(id).get().getNameOfProduct();
                 productRepo.deleteById(id);
                 log.info("Product {} deleted", del_product_name);
+                return true;
             } else {
                 log.error("Product not found");
+                return false;
             }
         } catch (Exception e) {
             log.error("The product could not be removed");
+            return false;
         }
     }
 
