@@ -26,4 +26,12 @@ public class ManagerController {
         return managerService.addProduct(nameOfProduct, description, price, image);
 
     }
+
+    @MutationMapping("updateProduct")
+    public Product edit(@Argument Long id,
+                        @Argument String nameOfProduct,
+                        @Argument String description,
+                        @Argument Double price) {
+        return managerService.editProduct(id, nameOfProduct, description, price);;
+    }
 }

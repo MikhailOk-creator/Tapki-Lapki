@@ -64,27 +64,28 @@ public class ManagerService {
      * @param id id of product that we want to edit
      * @param name_p new name of product
      * @param description new description of product
-     * @param image new image of product
+     * @return
      */
-    public void editProduct (Long id, String name_p, String description, MultipartFile image) {
+    public Product editProduct (Long id, String name_p, String description, Double price) {
         try {
             Product edit_product = productRepo.findByNameOfProduct(productRepo.findById(id).get().getNameOfProduct());
 
-            if (name_p != null && name_p != "") {
+            if (name_p != null && name_p.equals("")) {
                 edit_product.setNameOfProduct(name_p);
             }
-            if (description != null && description != "") {
+            if (description != null && description.equals("")) {
                 edit_product.setDescription(description);
             }
-            String image_url =  uploadImage(id, image);
-            if (image_url != null && image_url != "") {
-                edit_product.setImageURL(image_url);
+            if (price != null && price > 0) {
+                edit_product.setPriceOfProduct(price);
             }
 
             productRepo.save(edit_product);
             log.info("Updated product with id: {}", id);
+            return edit_product;
         } catch (Exception e) {
             log.error("The product has not been updated");
+            return null;
         }
     }
 

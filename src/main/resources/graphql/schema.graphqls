@@ -69,7 +69,7 @@ type Client {
 
 type Mutation {
     createProduct(nameOfProduct: String!, description: String!, price: Float!): Product
-    updateProduct(id: ID!, name: String!, description: String!, price: Float!, image_url: String!): Product
+    updateProduct(id: ID!, nameOfProduct: String!, description: String!, price: Float!): Product
     deleteProduct(id: ID!): Product
     createOrder(user_id: ID!, products: [ID]!, total: Float!, created_at: String!, ship_date: String!, status: String!): Order
     updateOrder(id: ID!, user_id: ID!, products: [ID]!, total: Float!, created_at: String!, ship_date: String!, status: String!): Order
