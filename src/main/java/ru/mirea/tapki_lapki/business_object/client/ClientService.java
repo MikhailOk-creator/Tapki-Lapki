@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.mirea.tapki_lapki.business_object.item.Item;
 import ru.mirea.tapki_lapki.business_object.item.ItemRepo;
+import ru.mirea.tapki_lapki.business_object.order.Order;
 import ru.mirea.tapki_lapki.business_object.order.OrderRepo;
 import ru.mirea.tapki_lapki.business_object.order.Status;
 import ru.mirea.tapki_lapki.business_object.product.Product;
@@ -27,7 +28,7 @@ public class ClientService {
      * @param productId id of product
      * @param clientId id of client
      */
-    public void addProductToCart(Long productId, Long clientId) {
+    public Item addProductToCart(Long productId, Long clientId) {
         Product product = productRepo.findById(productId).orElseThrow();
         Client client = clientRepo.findById(clientId).orElseThrow();
         Item item = new Item();
@@ -41,6 +42,7 @@ public class ClientService {
             item.setTotalPrice(product.getPriceOfProduct());
         }
         itemRepo.save(item);
+        return item;
     }
 
     /**
@@ -48,7 +50,7 @@ public class ClientService {
      * @param productId id of product
      * @param clientId id of client
      */
-    public void deleteProductFromCart(Long productId, Long clientId) {
+    public Item deleteProductFromCart(Long productId, Long clientId) {
         Product product = productRepo.findById(productId).orElseThrow();
         Client client = clientRepo.findById(clientId).orElseThrow();
         Item item = itemRepo.findByProductAndOrder(product, orderRepo.findByClientAndStatusOfOrder(client, Status.CART));
@@ -59,14 +61,24 @@ public class ClientService {
         } else {
             itemRepo.delete(item);
         }
+        return item;
     }
 
     /**
      * Method for placing order
      * @param clientId id of client
      */
-    public void placeOrder(Long clientId) {
-        Client client = clientRepo.findById(clientId).orElseThrow();
-        orderRepo.findByClientAndStatusOfOrder(client, Status.CART).setStatusOfOrder(Status.NEW);
+    public Order placeOrder(Long clientId) {
+        try {
+            Client client = clientRepo.findById(clientId).orElseThrow();
+            Order order = orderRepo.findByClientAndStatusOfOrder(client, Status.CART);
+            order.setStatusOfOrder(Status.NEW);
+            orderRepo.save(order);
+            log.info("Order {} by user {} was placed", order.getId(), client.getId());
+            return order;
+        } catch (Exception e) {
+            log.error("Order was not placed");
+            return null;
+        }
     }
 }
