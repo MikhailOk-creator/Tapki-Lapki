@@ -8,5 +8,8 @@ import java.util.Optional;
 
 @Repository
 public interface OrderRepo extends JpaRepository<Order, Long> {
-    Order findByClientAndStatusOfOrder(Client client, Status status);
+    Order findByClientAndStatusOfOrder(Client client, String status);
+    Order findByClientIdAndStatusOfOrder(Long clientId, Status status);
+    Order findByStatusOfOrder(String status);
+    Order findByClientIdAndIsCart(Long ClientId, Boolean cart);
 }

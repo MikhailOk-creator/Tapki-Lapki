@@ -19,29 +19,32 @@ public class Client {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name")
     private String name;
 
-    @Column(name = "address", nullable = false)
+    @Column(name = "address")
     private String address;
 
-    @Column(name = "city", nullable = false)
+    @Column(name = "city")
     private String city;
 
-    @Column(name = "state", nullable = false)
+    @Column(name = "state")
     private String state;
 
-    @Column(name = "zip_code", nullable = false)
+    @Column(name = "zip_code")
     private int zip_code;
 
-    @Column(name = "area_code", nullable = false)
+    @Column(name = "area_code")
     private int area_code;
 
-    @Column(name = "phone_number", nullable = false)
+    @Column(name = "phone_number")
     private String phone_number;
 
-    @Column(name = "comments", nullable = false)
+    @Column(name = "comments")
     private String comments;
+
+    @Column(name = "cart")
+    private Boolean cart;
 
     @OneToOne
     @JoinColumn(name = "user_id")

@@ -36,15 +36,16 @@ CREATE TABLE IF NOT EXISTS employee
 CREATE TABLE IF NOT EXISTS customer
 (
     id INT NOT NULL GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    name VARCHAR(50) NOT NULL,
-    address VARCHAR(50) NOT NULL,
-    city VARCHAR(50) NOT NULL,
-    state CHAR(2) NOT NULL,
-    zip_code CHAR(5) NOT NULL,
-    area_code VARCHAR(3) NOT NULL,
-    phone_number VARCHAR(10) NOT NULL,
+    name VARCHAR(50),
+    address VARCHAR(50),
+    city VARCHAR(50),
+    state CHAR(2),
+    zip_code CHAR(5),
+    area_code VARCHAR(3),
+    phone_number VARCHAR(10),
     comments VARCHAR(255),
     user_id int8 not null,
+    cart boolean default false,
     foreign key (user_id) references user_t(id)
 );
 
@@ -60,11 +61,12 @@ CREATE TABLE IF NOT EXISTS product
 CREATE TABLE IF NOT EXISTS sales_order
 (
     id INT NOT NULL GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    order_date DATE NOT NULL,
+    order_date DATE,
     customer_id INT NOT NULL,
     ship_date DATE,
-    total DECIMAL(10,2) NOT NULL,
+    total DECIMAL(10,2),
     status VARCHAR(125) NOT NULL,
+    cart boolean,
     foreign key (customer_id) references customer(id)
 );
 
@@ -73,7 +75,6 @@ CREATE TABLE IF NOT EXISTS item
     id INT NOT NULL GENERATED ALWAYS AS IDENTITY,
     order_id INT NOT NULL,
     product_id INT NOT NULL,
-    actual_price DECIMAL(10,2) NOT NULL,
     quantity INT NOT NULL,
     total DECIMAL(10,2) NOT NULL,
     foreign key (product_id) references product(id),

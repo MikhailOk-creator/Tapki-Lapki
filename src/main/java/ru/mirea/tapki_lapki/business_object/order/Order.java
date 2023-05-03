@@ -22,10 +22,10 @@ public class Order {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "costumer_id")
+    @JoinColumn(name = "customer_id", nullable = false)
     private Client client;
 
-    @Column(name = "order_date", nullable = false)
+    @Column(name = "order_date")
     private Date date;
 
     @Column(name = "ship_date")
@@ -36,4 +36,7 @@ public class Order {
 
     @Column(name = "status", nullable = false)
     private Status statusOfOrder;
+
+    @Column(name = "cart")
+    private boolean isCart;
 }

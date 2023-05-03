@@ -31,7 +31,6 @@ type Product {
 type Order {
     id: ID!
     user: Client!
-    products: [Product]!
     total: Float!
     created_at: String!
     ship_date: String!
@@ -69,6 +68,7 @@ type Client {
 
 type Item {
     id: ID!
+    order: Order!
     product: Product!
     quantity: Int!
     price: Float!
@@ -81,7 +81,7 @@ type Mutation {
 
     createOrder(user_id: ID!): Order
     changeStatusOfOrder(id: ID!, status: String!): Order
-    addProductToCart(order_id: ID!, product_id: ID!): Item
+    addProductToCart(productId: ID!, clientId: ID!): Item
     deleteProductFromCart(order_id: ID!, product_id: ID!): Item
 
 

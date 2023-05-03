@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import ru.mirea.tapki_lapki.business_object.client.Client;
+import ru.mirea.tapki_lapki.business_object.client.ClientRepo;
 
 import java.util.Set;
 
@@ -15,6 +17,7 @@ import java.util.Set;
 @Slf4j
 public class UserService {
     private final UserRepo userRepo;
+    private final ClientRepo clientRepo;
 
     /**
      * Method for getting user by id
@@ -43,6 +46,12 @@ public class UserService {
         user.setActive(true);
         userRepo.save(user);
         log.info("Created new user (username: {})", user.getUsername());
+
+        Client client = new Client();
+        client.setUser(userRepo.findByUsername(username));
+        client.setCart(false);
+        clientRepo.save(client);
+
         return user;
     }
 }

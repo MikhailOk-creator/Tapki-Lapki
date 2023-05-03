@@ -11,6 +11,8 @@ import ru.mirea.tapki_lapki.business_object.order.Status;
 import ru.mirea.tapki_lapki.business_object.product.Product;
 import ru.mirea.tapki_lapki.business_object.product.ProductRepo;
 
+import static ru.mirea.tapki_lapki.business_object.order.Status.CART;
+
 /**
  * Service for client
  */
@@ -29,20 +31,47 @@ public class ClientService {
      * @param clientId id of client
      */
     public Item addProductToCart(Long productId, Long clientId) {
-        Product product = productRepo.findById(productId).orElseThrow();
-        Client client = clientRepo.findById(clientId).orElseThrow();
-        Item item = new Item();
-        if (itemRepo.findByProductAndOrder(product, orderRepo.findByClientAndStatusOfOrder(client, Status.CART)) != null) {
-            item = itemRepo.findByProductAndOrder(product, orderRepo.findByClientAndStatusOfOrder(client, Status.CART));
-            item.setQuantity(item.getQuantity() + 1);
-            item.setTotalPrice(item.getTotalPrice() + product.getPriceOfProduct());
-        } else {
-            item.setProduct(product);
-            item.setQuantity(1);
-            item.setTotalPrice(product.getPriceOfProduct());
+        try {
+            Product product = productRepo.findById(productId).orElseThrow();
+            Client client = clientRepo.findById(clientId).orElseThrow();
+
+            if (!client.getCart()) {
+                Order order = new Order();
+                order.setStatusOfOrder(CART);
+                order.setCart(true);
+                order.setClient(client);
+                orderRepo.save(order);
+                Item item = new Item();
+                item.setProduct(product);
+                item.setQuantity(1);
+                item.setTotalPrice(product.getPriceOfProduct());
+                item.setOrder(orderRepo.findByClientIdAndIsCart(clientId, true));
+                item.setTotalPrice(product.getPriceOfProduct());
+                itemRepo.save(item);
+                client.setCart(true);
+                clientRepo.save(client);
+                log.info("Client {} create new cart", clientId);
+                return item;
+            } else {
+                Order exist_order = orderRepo.findByClientIdAndIsCart(clientId, true);
+                Item item = itemRepo.findByOrder(exist_order);
+                if (itemRepo.findByProductAndOrder(product, exist_order) != null) {
+                    item.setQuantity(item.getQuantity() + 1);
+                    item.setTotalPrice(item.getTotalPrice() + product.getPriceOfProduct());
+                } else {
+                    item.setProduct(product);
+                    item.setQuantity(1);
+                    item.setTotalPrice(product.getPriceOfProduct());
+                }
+                itemRepo.save(item);
+                log.info("Add new product {} in client {} cart", productId, clientId);
+                return item;
+            }
+        } catch (Exception e) {
+            log.error("Something wrong!");
+            log.warn(e.toString());
+            return null;
         }
-        itemRepo.save(item);
-        return item;
     }
 
     /**
@@ -53,7 +82,7 @@ public class ClientService {
     public Item deleteProductFromCart(Long productId, Long clientId) {
         Product product = productRepo.findById(productId).orElseThrow();
         Client client = clientRepo.findById(clientId).orElseThrow();
-        Item item = itemRepo.findByProductAndOrder(product, orderRepo.findByClientAndStatusOfOrder(client, Status.CART));
+        Item item = itemRepo.findByProductAndOrder(product, orderRepo.findByClientAndStatusOfOrder(client, CART.toString()));
         if (item.getQuantity() > 1) {
             item.setQuantity(item.getQuantity() - 1);
             item.setTotalPrice(item.getTotalPrice() - product.getPriceOfProduct());
@@ -71,7 +100,7 @@ public class ClientService {
     public Order placeOrder(Long clientId) {
         try {
             Client client = clientRepo.findById(clientId).orElseThrow();
-            Order order = orderRepo.findByClientAndStatusOfOrder(client, Status.CART);
+            Order order = orderRepo.findByClientAndStatusOfOrder(client, CART.toString());
             order.setStatusOfOrder(Status.NEW);
             orderRepo.save(order);
             log.info("Order {} by user {} was placed", order.getId(), client.getId());
