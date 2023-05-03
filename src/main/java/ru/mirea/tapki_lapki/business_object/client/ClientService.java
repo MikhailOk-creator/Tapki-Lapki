@@ -81,8 +81,7 @@ public class ClientService {
      */
     public Item deleteProductFromCart(Long productId, Long clientId) {
         Product product = productRepo.findById(productId).orElseThrow();
-        Client client = clientRepo.findById(clientId).orElseThrow();
-        Item item = itemRepo.findByProductAndOrder(product, orderRepo.findByClientAndStatusOfOrder(client, CART.toString()));
+        Item item = itemRepo.findByOrder(orderRepo.findByClientIdAndIsCart(clientId, true));
         if (item.getQuantity() > 1) {
             item.setQuantity(item.getQuantity() - 1);
             item.setTotalPrice(item.getTotalPrice() - product.getPriceOfProduct());

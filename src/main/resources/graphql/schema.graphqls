@@ -82,7 +82,7 @@ type Mutation {
     createOrder(user_id: ID!): Order
     changeStatusOfOrder(id: ID!, status: String!): Order
     addProductToCart(productId: ID!, clientId: ID!): Item
-    deleteProductFromCart(order_id: ID!, product_id: ID!): Item
+    deleteProductFromCart(productId: ID!, clientId: ID!): Item
 
 
     createEmployee(username: String!, password: String!, email: String!, role: String! firstName: String!, lastName: String!, middleName: String!, job_id: ID!, salary: Float!): Employee
