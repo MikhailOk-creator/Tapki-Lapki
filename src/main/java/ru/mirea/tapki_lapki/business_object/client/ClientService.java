@@ -11,6 +11,9 @@ import ru.mirea.tapki_lapki.business_object.order.Status;
 import ru.mirea.tapki_lapki.business_object.product.Product;
 import ru.mirea.tapki_lapki.business_object.product.ProductRepo;
 
+import java.util.Collections;
+import java.util.List;
+
 import static ru.mirea.tapki_lapki.business_object.order.Status.CART;
 
 /**
@@ -103,6 +106,17 @@ public class ClientService {
             log.warn("Client {} don't have product {} in cart!", clientId, productId);
             return null;
         }
+    }
+
+    public List<Item> showClientCart(Long clientId) {
+        Order exist_order = orderRepo.findByClientIdAndIsCart(clientId, true);
+        List<Item> cart = itemRepo.findAll();
+        for (Item item : cart) {
+            if (item.getOrder().getId() != exist_order.getId()) {
+                cart.remove(item);
+            }
+        }
+        return cart;
     }
 
     /**

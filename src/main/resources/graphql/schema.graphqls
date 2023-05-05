@@ -6,6 +6,8 @@ type Query {
     order(id: ID!): Order
     employees: [Employee]
     employee(id: ID!): Employee
+
+    showCart(clientId: ID!): [Item]
 }
 
 type User {
@@ -83,7 +85,6 @@ type Mutation {
     changeStatusOfOrder(id: ID!, status: String!): Order
     addProductToCart(productId: ID!, clientId: ID!): Item
     deleteProductFromCart(productId: ID!, clientId: ID!): Item
-
 
     createEmployee(username: String!, password: String!, email: String!, role: String! firstName: String!, lastName: String!, middleName: String!, job_id: ID!, salary: Float!): Employee
     updateEmployee(id: ID!, first_name: String!, last_name: String!, middle_name: String!, job_id: ID!, hire_date: String!, salary: Float!, user_id: ID!): Employee
