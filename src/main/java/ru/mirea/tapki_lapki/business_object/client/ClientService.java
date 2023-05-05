@@ -54,18 +54,25 @@ public class ClientService {
                 return item;
             } else {
                 Order exist_order = orderRepo.findByClientIdAndIsCart(clientId, true);
-                Item item = itemRepo.findByOrder(exist_order);
-                if (itemRepo.findByProductAndOrder(product, exist_order) != null) {
+                Item item = itemRepo.findByProductAndOrder(product, exist_order);
+                if (item != null) {
+                    log.warn("Found another product in cart");
                     item.setQuantity(item.getQuantity() + 1);
                     item.setTotalPrice(item.getTotalPrice() + product.getPriceOfProduct());
+                    itemRepo.save(item);
+                    log.info("Add new product {} in client {} cart", productId, clientId);
+                    return item;
                 } else {
-                    item.setProduct(product);
-                    item.setQuantity(1);
-                    item.setTotalPrice(product.getPriceOfProduct());
+                    log.warn("Not found product in cart");
+                    Item new_item = new Item();
+                    new_item.setProduct(product);
+                    new_item.setQuantity(1);
+                    new_item.setTotalPrice(product.getPriceOfProduct());
+                    new_item.setOrder(item.getOrder());
+                    itemRepo.save(new_item);
+                    log.info("Add new product {} in client {} cart", productId, clientId);
+                    return new_item;
                 }
-                itemRepo.save(item);
-                log.info("Add new product {} in client {} cart", productId, clientId);
-                return item;
             }
         } catch (Exception e) {
             log.error("Something wrong!");
@@ -81,15 +88,21 @@ public class ClientService {
      */
     public Item deleteProductFromCart(Long productId, Long clientId) {
         Product product = productRepo.findById(productId).orElseThrow();
-        Item item = itemRepo.findByOrder(orderRepo.findByClientIdAndIsCart(clientId, true));
-        if (item.getQuantity() > 1) {
-            item.setQuantity(item.getQuantity() - 1);
-            item.setTotalPrice(item.getTotalPrice() - product.getPriceOfProduct());
-            itemRepo.save(item);
+        Order exist_order = orderRepo.findByClientIdAndIsCart(clientId, true);
+        Item item = itemRepo.findByProductAndOrder(product, exist_order);
+        if (item != null) {
+            if (item.getQuantity() > 1) {
+                item.setQuantity(item.getQuantity() - 1);
+                item.setTotalPrice(item.getTotalPrice() - product.getPriceOfProduct());
+                itemRepo.save(item);
+            } else {
+                itemRepo.delete(item);
+            }
+            return item;
         } else {
-            itemRepo.delete(item);
+            log.warn("Client {} don't have product {} in cart!", clientId, productId);
+            return null;
         }
-        return item;
     }
 
     /**
